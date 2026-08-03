@@ -17,10 +17,10 @@ public class SQLcommands {
         ResultSet rs = st.executeQuery(Query);
         if (rs.next())
         { 
-            System.out.println("Course alrady exists");
+            System.out.println("Course already exists");
             return;
         }
-        Query = "Insert into Course (code, title)values ('" + CourseCode + "', '" + CourseTitle + "')";
+        Query = "Insert into Course (code, title) values ('" + CourseCode + "', '" + CourseTitle + "')";
         try 
         { 
             st.executeUpdate(Query); 
@@ -37,8 +37,34 @@ public class SQLcommands {
     //case 2 : delete a course
     public void delete_course(Connection conn, Scanner keyboard) throws SQLException
     {
-        
+        Statement st = conn.createStatement();
+        System.out.println("Delete a course");
+        System.out.print("Please input course code: ");
+        String CourseCode = keyboard.nextLine().toUpperCase().trim();
+        String Query = "Select code from Course where code = '" + CourseCode + "'";
+        ResultSet rs = st.executeQuery(Query);
+        if (!rs.next())
+        {
+            System.out.println("Course does not exist");
+            rs.close();
+            st.close();
+            return;
+        }
+        rs.close();
+
+        Query = "Delete from Course where code = '" + CourseCode + "'";
+        try 
+        { 
+            st.executeUpdate(Query);
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Message: "+ e.getMessage());
+        }
+        st.close();
+        System.out.println("Course deleted.");
     }
+
 
     //case 3 : add a student
     public void add_student(Connection conn, Scanner keyboard) throws SQLException
@@ -57,6 +83,6 @@ public class SQLcommands {
     {
 
     }
-    
+
     // case 8 handled in driver.java 
 }
