@@ -35,8 +35,7 @@ public class Driver {
             while (keepGoing == true)
             {
                 printmenu();
-                input = scan.nextLine();
-                command = Integer.parseInt(input);
+                command = UserInput.getChoice(scan);
 
                 switch(command)
                 {
@@ -80,10 +79,9 @@ public class Driver {
     }
 
     static class UserInput {
-        public static void main(String[] args) {
-            Scanner scan = new Scanner(System.in);
+        public static int getChoice(Scanner scan) {
             System.out.print("Type the number corresponding to the action you want to perform: ");
-            int number = Integer.parseInt(scan.nextLine());
+            return Integer.parseInt(scan.nextLine());
         }
     }
 
