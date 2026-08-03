@@ -41,7 +41,7 @@ public class SQLcommands {
         System.out.println("Delete a course");
         System.out.print("Please input course code: ");
         String CourseCode = keyboard.nextLine().toUpperCase().trim();
-        String Query = "Select code from Course where code = '" + CourseCode + "'";
+        String Query = "Select code from course where code = '" + CourseCode + "'";
         ResultSet rs = st.executeQuery(Query);
         if (!rs.next())
         {
@@ -63,13 +63,35 @@ public class SQLcommands {
         }
         st.close();
         System.out.println("Course deleted.");
+
     }
 
 
     //case 3 : add a student
     public void add_student(Connection conn, Scanner keyboard) throws SQLException
     { 
-
+        Statement st = conn.createStatement();
+        // adding logic to allow users to add multiple students 
+        System.out.println("How many students would you like to add?");
+        String num_students = keyboard.nextLine().trim();
+        int count = Integer.parseInt(num_students);
+        while (count > 0) 
+        {
+            System.out.println("Enter student ssn:");
+            String ssn = keyboard.nextLine().trim();
+            System.out.println("Enter student name: ");
+            String name = keyboard.nextLine().trim();
+            System.out.println("Enter student address: ");
+            String address = keyboard.nextLine().trim();
+            System.out.println("Enter student major: ");
+            String major = keyboard.nextLine().trim();
+            String Query = "Insert into Student values ('" + ssn + "','" + name + "', '" + address + "', '" + major + "')";
+            st.executeUpdate(Query);
+            System.out.println("Student added successfully");
+            count--;
+        }
+        st.close();
+    
     }
 
     //case 4 : delete a student
